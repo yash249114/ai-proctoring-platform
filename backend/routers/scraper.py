@@ -3,7 +3,7 @@
 from fastapi import APIRouter, HTTPException
 from pydantic import BaseModel
 
-from backend.services.scraper_service import scrape_question
+from services.scraper_service import scrape_question
 
 router = APIRouter(prefix="/scraper", tags=["Scraper"])
 

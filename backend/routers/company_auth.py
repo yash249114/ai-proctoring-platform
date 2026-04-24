@@ -8,8 +8,8 @@ from pydantic import BaseModel
 from jose import jwt
 from passlib.context import CryptContext
 
-from backend.config import JWT_SECRET, JWT_ALGORITHM, JWT_EXPIRE_HOURS
-from backend.models.company import Company
+from config import JWT_SECRET, JWT_ALGORITHM, JWT_EXPIRE_HOURS
+from models.company import Company
 
 logger = logging.getLogger(__name__)
 router = APIRouter(prefix="/company", tags=["Company Auth"])

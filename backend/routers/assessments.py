@@ -12,12 +12,12 @@ from jose import jwt
 from passlib.context import CryptContext
 from bson import ObjectId
 
-from backend.config import JWT_SECRET, JWT_ALGORITHM, FRONTEND_URL
-from backend.models.assessment import Assessment
-from backend.models.question import Question
-from backend.models.student import Student
-from backend.models.company import Company
-from backend.services.email_service import send_exam_credentials
+from config import JWT_SECRET, JWT_ALGORITHM, FRONTEND_URL
+from models.assessment import Assessment
+from models.question import Question
+from models.student import Student
+from models.company import Company
+from services.email_service import send_exam_credentials
 
 logger = logging.getLogger(__name__)
 router = APIRouter(prefix="/assessments", tags=["Assessments"])

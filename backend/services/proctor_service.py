@@ -3,8 +3,8 @@
 import logging
 from datetime import datetime, timezone
 
-from backend.models.session import ExamSession
-from backend.services.ws_manager import manager
+from models.session import ExamSession
+from services.ws_manager import manager
 
 logger = logging.getLogger(__name__)
 

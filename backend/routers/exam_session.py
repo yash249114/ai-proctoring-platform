@@ -10,11 +10,11 @@ from typing import Dict
 from jose import jwt
 from bson import ObjectId
 
-from backend.config import JWT_SECRET, JWT_ALGORITHM
-from backend.models.session import ExamSession
-from backend.models.assessment import Assessment
-from backend.models.question import Question
-from backend.services.eval_engine import evaluate_submission
+from config import JWT_SECRET, JWT_ALGORITHM
+from models.session import ExamSession
+from models.assessment import Assessment
+from models.question import Question
+from services.eval_engine import evaluate_submission
 
 logger = logging.getLogger(__name__)
 router = APIRouter(prefix="/exam", tags=["Exam Session"])

@@ -6,11 +6,11 @@ from datetime import datetime, timezone
 
 from openai import AsyncOpenAI
 
-from backend.config import OPENROUTER_API_KEY, OPENROUTER_BASE_URL, OPENROUTER_MODEL
-from backend.models.session import ExamSession
-from backend.models.question import Question
-from backend.models.submission import Submission
-from backend.services.ws_manager import manager
+from config import OPENROUTER_API_KEY, OPENROUTER_BASE_URL, OPENROUTER_MODEL
+from models.session import ExamSession
+from models.question import Question
+from models.submission import Submission
+from services.ws_manager import manager
 
 logger = logging.getLogger(__name__)
 

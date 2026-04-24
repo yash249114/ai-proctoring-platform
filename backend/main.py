@@ -11,19 +11,19 @@ from beanie import init_beanie
 from passlib.context import CryptContext
 import os
 
-from backend.config import MONGO_URI, DATABASE_NAME
-from backend.models.albus import Albus
-from backend.models.company import Company
-from backend.models.student import Student
-from backend.models.question import Question
-from backend.models.assessment import Assessment
-from backend.models.session import ExamSession
-from backend.models.submission import Submission
-from backend.models.contact import Contact
-from backend.models.report import Report
+from config import MONGO_URI, DATABASE_NAME
+from models.albus import Albus
+from models.company import Company
+from models.student import Student
+from models.question import Question
+from models.assessment import Assessment
+from models.session import ExamSession
+from models.submission import Submission
+from models.contact import Contact
+from models.report import Report
 from pydantic import BaseModel
 
-from backend.routers import (
+from routers import (
     albus_auth, company_auth, company_dashboard,
     assessments, questions, students,
     exam_session, ws, scraper,

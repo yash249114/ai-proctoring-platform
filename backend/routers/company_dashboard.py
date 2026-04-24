@@ -6,12 +6,12 @@ from fastapi.security import HTTPBearer, HTTPAuthorizationCredentials
 from jose import jwt
 from bson import ObjectId
 
-from backend.config import JWT_SECRET, JWT_ALGORITHM
-from backend.models.company import Company
-from backend.models.assessment import Assessment
-from backend.models.student import Student
-from backend.models.submission import Submission
-from backend.models.session import ExamSession
+from config import JWT_SECRET, JWT_ALGORITHM
+from models.company import Company
+from models.assessment import Assessment
+from models.student import Student
+from models.submission import Submission
+from models.session import ExamSession
 
 logger = logging.getLogger(__name__)
 router = APIRouter(prefix="/company", tags=["Company Dashboard"])

@@ -10,9 +10,9 @@ from jose import jwt
 from passlib.context import CryptContext
 from bson import ObjectId
 
-from backend.config import JWT_SECRET, JWT_ALGORITHM, JWT_EXPIRE_HOURS
-from backend.models.student import Student
-from backend.models.assessment import Assessment
+from config import JWT_SECRET, JWT_ALGORITHM, JWT_EXPIRE_HOURS
+from models.student import Student
+from models.assessment import Assessment
 
 logger = logging.getLogger(__name__)
 router = APIRouter(prefix="/student", tags=["Student"])

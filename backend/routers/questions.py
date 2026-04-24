@@ -10,9 +10,8 @@ from typing import Optional
 from jose import jwt
 from bson import ObjectId
 
-from backend.config import JWT_SECRET, JWT_ALGORITHM
-
-from backend.models.question import Question
+from config import JWT_SECRET, JWT_ALGORITHM
+from models.question import Question
 
 logger = logging.getLogger(__name__)
 router = APIRouter(prefix="/questions", tags=["Questions"])

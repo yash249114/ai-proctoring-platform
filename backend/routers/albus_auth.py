@@ -9,12 +9,12 @@ from pydantic import BaseModel
 from jose import jwt
 from passlib.context import CryptContext
 
-from backend.config import JWT_SECRET, JWT_ALGORITHM, JWT_EXPIRE_HOURS
-from backend.models.albus import Albus
-from backend.models.company import Company
-from backend.models.student import Student
-from backend.models.assessment import Assessment
-from backend.models.session import ExamSession
+from config import JWT_SECRET, JWT_ALGORITHM, JWT_EXPIRE_HOURS
+from models.albus import Albus
+from models.company import Company
+from models.student import Student
+from models.assessment import Assessment
+from models.session import ExamSession
 
 logger = logging.getLogger(__name__)
 router = APIRouter(prefix="/albus", tags=["Albus"])

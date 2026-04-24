@@ -8,9 +8,9 @@ from datetime import datetime, timezone
 
 from fastapi import APIRouter, WebSocket, WebSocketDisconnect
 
-from backend.models.session import ExamSession
-from backend.services.ws_manager import manager
-from backend.services.proctor_service import check_disqualify
+from models.session import ExamSession
+from services.ws_manager import manager
+from services.proctor_service import check_disqualify
 
 logger = logging.getLogger(__name__)
 router = APIRouter(tags=["WebSocket"])
