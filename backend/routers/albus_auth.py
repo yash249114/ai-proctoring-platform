@@ -7,7 +7,7 @@ from fastapi import APIRouter, HTTPException, Depends
 from fastapi.security import HTTPBearer, HTTPAuthorizationCredentials
 from pydantic import BaseModel
 from jose import jwt
-from passlib.context import CryptContext
+import bcrypt
 
 from config import JWT_SECRET, JWT_ALGORITHM, JWT_EXPIRE_HOURS
 from models.albus import Albus
@@ -18,7 +18,7 @@ from models.session import ExamSession
 
 logger = logging.getLogger(__name__)
 router = APIRouter(prefix="/albus", tags=["Albus"])
-pwd = CryptContext(schemes=["bcrypt"], deprecated="auto")
+
 
 
 class LoginBody(BaseModel):
@@ -54,7 +54,7 @@ async def get_albus_user(credentials: HTTPAuthorizationCredentials = Depends(sec
 @router.post("/login")
 async def login(body: LoginBody):
     albus = await Albus.find_one(Albus.email == body.email)
-    if not albus or not pwd.verify(body.password, albus.hashed_password):
+    if not albus or not bcrypt.checkpw(body.password.encode('utf-8'), albus.hashed_password.encode('utf-8')):
         raise HTTPException(401, "Invalid credentials")
     token = _create_token(albus.email, "albus")
     return {"token": token, "role": "albus", "email": albus.email}

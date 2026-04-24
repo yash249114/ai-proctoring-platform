@@ -6,14 +6,14 @@ from datetime import datetime, timezone, timedelta
 from fastapi import APIRouter, HTTPException
 from pydantic import BaseModel
 from jose import jwt
-from passlib.context import CryptContext
+import bcrypt
 
 from config import JWT_SECRET, JWT_ALGORITHM, JWT_EXPIRE_HOURS
 from models.company import Company
 
 logger = logging.getLogger(__name__)
 router = APIRouter(prefix="/company", tags=["Company Auth"])
-pwd = CryptContext(schemes=["bcrypt"], deprecated="auto")
+
 
 
 class RegisterBody(BaseModel):
@@ -47,7 +47,7 @@ async def register(body: RegisterBody):
     company = Company(
         company_name=body.company_name,
         email=body.email,
-        hashed_password=pwd.hash(body.password),
+        hashed_password=bcrypt.hashpw(body.password.encode('utf-8'), bcrypt.gensalt()).decode('utf-8'),
         terms_accepted=True,
         is_verified=True,
         is_email_verified=True,
@@ -63,7 +63,7 @@ async def register(body: RegisterBody):
 @router.post("/login")
 async def login(body: LoginBody):
     company = await Company.find_one(Company.email == body.email)
-    if not company or not pwd.verify(body.password, company.hashed_password):
+    if not company or not bcrypt.checkpw(body.password.encode('utf-8'), company.hashed_password.encode('utf-8')):
         raise HTTPException(401, "Invalid credentials")
 
 

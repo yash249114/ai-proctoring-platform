@@ -9,7 +9,7 @@ from fastapi import APIRouter, HTTPException, Header, BackgroundTasks
 from pydantic import BaseModel
 from typing import List, Optional
 from jose import jwt
-from passlib.context import CryptContext
+import bcrypt
 from bson import ObjectId
 
 from config import JWT_SECRET, JWT_ALGORITHM, FRONTEND_URL
@@ -21,7 +21,7 @@ from services.email_service import send_exam_credentials
 
 logger = logging.getLogger(__name__)
 router = APIRouter(prefix="/assessments", tags=["Assessments"])
-pwd = CryptContext(schemes=["bcrypt"], deprecated="auto")
+
 
 
 def _get_company_id(authorization: str) -> str:
@@ -216,7 +216,7 @@ async def send_assessment(assessment_id: str, body: SendBody, background_tasks: 
                 name=entry.name,
                 email=entry.email,
                 college_id=entry.college_id,
-                hashed_password=pwd.hash(raw_password),
+                hashed_password=bcrypt.hashpw(raw_password.encode('utf-8'), bcrypt.gensalt()).decode('utf-8'),
                 company_id=cid,
                 assigned_assessments=[assessment_id],
             )

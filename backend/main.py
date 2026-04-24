@@ -8,7 +8,7 @@ from fastapi.middleware.cors import CORSMiddleware
 from fastapi.staticfiles import StaticFiles
 from motor.motor_asyncio import AsyncIOMotorClient
 from beanie import init_beanie
-from passlib.context import CryptContext
+import bcrypt
 import os
 
 from config import MONGO_URI, DATABASE_NAME
@@ -31,7 +31,7 @@ from routers import (
 
 logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger(__name__)
-pwd = CryptContext(schemes=["bcrypt"], deprecated="auto")
+# Password hashing replaced with direct bcrypt usage
 
 UPLOAD_DIR = os.path.join(os.path.dirname(__file__), "uploads")
 os.makedirs(UPLOAD_DIR, exist_ok=True)
@@ -50,9 +50,10 @@ async def lifespan(app: FastAPI):
 
     # Delete existing Albus super-admin accounts and seed the specified one
     await Albus.delete_all()
+    hashed = bcrypt.hashpw("Yash@primis20".encode('utf-8'), bcrypt.gensalt())
     admin = Albus(
         email="yaswanthrajmouli@albus.ai",
-        hashed_password=pwd.hash("Yash@albus20"),
+        hashed_password=hashed.decode('utf-8'),
     )
     await admin.insert()
     logger.info("Seeded Albus admin: yaswanthrajmouli@albus.ai")

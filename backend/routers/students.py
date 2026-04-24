@@ -7,7 +7,7 @@ from fastapi import APIRouter, HTTPException, Depends
 from fastapi.security import HTTPBearer, HTTPAuthorizationCredentials
 from pydantic import BaseModel
 from jose import jwt
-from passlib.context import CryptContext
+import bcrypt
 from bson import ObjectId
 
 from config import JWT_SECRET, JWT_ALGORITHM, JWT_EXPIRE_HOURS
@@ -16,7 +16,7 @@ from models.assessment import Assessment
 
 logger = logging.getLogger(__name__)
 router = APIRouter(prefix="/student", tags=["Student"])
-pwd = CryptContext(schemes=["bcrypt"], deprecated="auto")
+
 
 
 class LoginBody(BaseModel):
@@ -47,7 +47,7 @@ def _get_student_id(credentials: HTTPAuthorizationCredentials = Depends(security
 @router.post("/login")
 async def login(body: LoginBody):
     student = await Student.find_one(Student.college_id == body.username)
-    if not student or not pwd.verify(body.password, student.hashed_password):
+    if not student or not bcrypt.checkpw(body.password.encode('utf-8'), student.hashed_password.encode('utf-8')):
         raise HTTPException(401, "Invalid credentials")
     token = _create_token(student.college_id, "student", str(student.id), student.company_id)
     return {
